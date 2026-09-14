@@ -1,9 +1,0 @@
-[tool.vercel]
-entrypoint = "main.api:app"
-[project]
-name = "main"
-version = "0.1.0"
-requires-python = ">=3.12"
-dependencies = [
-    "fastapi>=0.117.1",
-]
