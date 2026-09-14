@@ -1,2 +1,2 @@
-[tool.vercel.entrypoint]
-entrypoint = "2_player:app"
+[tool.vercel]
+entrypoint = "main:app"
