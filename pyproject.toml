@@ -1,0 +1,2 @@
+[tool.vercel]
+entrypoint = "2_player:app"
