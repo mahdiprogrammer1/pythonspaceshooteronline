@@ -68,7 +68,7 @@ async def create_room(req: UsernameRequest):
 async def join_room(room_id: str, username: str = Query(..., min_length=3)):
     if room_id not in rooms:
         raise HTTPException(status_code=404, detail="اتاق پیدا نشد")
-    if len(rooms[room_id]["players"]) >= 2:
+    if len(rooms[room_id]["players"]) >= 4:
         raise HTTPException(status_code=400, detail="اتاق پر است")
     if username in room_players.get(room_id, set()):
         raise HTTPException(status_code=409, detail="این نام قبلا استفاده شده")
@@ -91,7 +91,7 @@ async def game_ws(websocket: WebSocket, room_id: str, username: str):
     
     await manager.broadcast(room_id, {"type": "player_joined", "players": room["players"]})
 
-    if len(room["players"]) == 2 and room["status"] == "waiting":
+    if len(room["players"]) == 4 and room["status"] == "waiting":
         room["status"] = "countdown"
         asyncio.create_task(start_countdown(room_id))
 
@@ -184,7 +184,7 @@ GAME_HTML = """
         <div class="player-list" id="player-list"></div>
         <p style="font-size:0.85rem; color:#aaa;">لینک زیر را برای دوستانت بفرست:</p>
         <div id="share-box" onclick="copyLink()" title="برای کپی کلیک کنید">...</div>
-        <p style="font-size:0.8rem; color:#888; margin-top:10px;">بازی با ورود نفر دوم خودکار شروع می‌شود</p>
+        <p style="font-size:0.8rem; color:#888; margin-top:10px;">بازی با ورود نفر چهارم خودکار شروع می‌شود</p>
     </div>
 
     <!-- Game UI -->
